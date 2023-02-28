@@ -1,5 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Sas;
 
 namespace FileService.Managers;
 
@@ -40,5 +42,23 @@ public class StorageManager
         {
             return null;
         }
+    }
+
+    public string? GenerateLink(string filename)
+    {
+        var blobClient = Client.GetBlobClient(filename);
+        if (!blobClient.CanGenerateSasUri) return null;
+
+        var builder = new BlobSasBuilder
+        {
+            BlobContainerName = blobClient.GetParentBlobContainerClient().Name,
+            BlobName = blobClient.Name,
+            Resource = "b",
+            ExpiresOn = DateTimeOffset.Now.AddHours(1)
+        };
+        builder.SetPermissions(BlobSasPermissions.Read);
+
+        var uri = blobClient.GenerateSasUri(builder);
+        return uri.ToString();
     }
 }

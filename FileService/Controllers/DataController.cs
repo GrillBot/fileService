@@ -31,4 +31,14 @@ public class DataController : Controller
 
         return File(result.Value.content, result.Value.contentType, filename);
     }
+
+    [HttpGet("link")]
+    public ActionResult<string> GenerateLink([Required] string filename)
+    {
+        var result = StorageManager.GenerateLink(filename);
+        if (result == null)
+            return NotFound();
+
+        return Ok(result);
+    }
 }
