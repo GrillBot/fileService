@@ -1,4 +1,5 @@
-﻿using FileService.Managers;
+﻿using System.ComponentModel.DataAnnotations;
+using FileService.Managers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileService.Controllers;
@@ -19,5 +20,15 @@ public class DataController : Controller
     {
         await StorageManager.UploadFileAsync(file);
         return Ok();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> DownloadFileAsync([Required] string filename)
+    {
+        var result = await StorageManager.DownloadFileAsync(filename);
+        if (result == null)
+            return NotFound();
+
+        return File(result.Value.content, result.Value.contentType, filename);
     }
 }
