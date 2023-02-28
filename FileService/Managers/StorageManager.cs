@@ -61,4 +61,10 @@ public class StorageManager
         var uri = blobClient.GenerateSasUri(builder);
         return uri.ToString();
     }
+
+    public async Task DeleteAsync(string filename)
+    {
+        var blobClient = Client.GetBlobClient(filename);
+        await blobClient.DeleteIfExistsAsync();
+    }
 }

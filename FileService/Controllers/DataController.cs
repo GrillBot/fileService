@@ -41,4 +41,11 @@ public class DataController : Controller
 
         return Ok(result);
     }
+
+    [HttpDelete]
+    public async Task<ActionResult> DeleteAsync([Required] string filename)
+    {
+        await StorageManager.DeleteAsync(filename);
+        return Ok();
+    }
 }
