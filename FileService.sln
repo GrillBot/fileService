@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrillBot-FileService", "GrillBot-FileService\GrillBot-FileService.csproj", "{4565EBA7-B23E-46DA-8E7C-8D5AE654BDB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService", "FileService\FileService.csproj", "{4565EBA7-B23E-46DA-8E7C-8D5AE654BDB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
