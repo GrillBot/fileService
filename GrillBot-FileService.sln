@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrillBot-FileService", "GrillBot-FileService\GrillBot-FileService.csproj", "{4565EBA7-B23E-46DA-8E7C-8D5AE654BDB1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4565EBA7-B23E-46DA-8E7C-8D5AE654BDB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4565EBA7-B23E-46DA-8E7C-8D5AE654BDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4565EBA7-B23E-46DA-8E7C-8D5AE654BDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4565EBA7-B23E-46DA-8E7C-8D5AE654BDB1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
