@@ -18,8 +18,8 @@ public class DataController : Controller
     [HttpPost]
     public async Task<ActionResult> StoreFileAsync(IFormFile file)
     {
-        await StorageManager.UploadFileAsync(file);
-        return Ok();
+        var statusCode = await StorageManager.UploadFileAsync(file);
+        return StatusCode(statusCode);
     }
 
     [HttpGet]

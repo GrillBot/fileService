@@ -1,3 +1,4 @@
+using FileService.Cache;
 using FileService.Managers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,9 +9,11 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 builder.Services
-    .AddScoped<StorageManager>();
+    .AddScoped<StorageManager>()
+    .AddScoped<StorageCacheManager>();
 
 builder.Services
+    .AddMemoryCache()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddControllers();
