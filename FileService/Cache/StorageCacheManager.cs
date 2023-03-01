@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using System.Diagnostics.CodeAnalysis;
+using Azure.Storage.Sas;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FileService.Cache;
 
@@ -8,7 +10,7 @@ public class StorageCacheManager
 
     private static readonly object Locker = new();
 
-    private static DateTimeOffset ExpirationAt
+    private static DateTimeOffset FileExpirationAt
         => DateTimeOffset.Now.AddDays(1);
 
     public StorageCacheManager(IMemoryCache memoryCache)
@@ -26,7 +28,17 @@ public class StorageCacheManager
 
         lock (Locker)
         {
-            Cache.Set(filename, cacheFile, ExpirationAt);
+            Cache.Set(filename, cacheFile, FileExpirationAt);
+        }
+    }
+
+    public void AddSasLink(string filename, string link, BlobSasBuilder builder)
+    {
+        var cacheKey = $"[SAS]({filename})";
+
+        lock (Locker)
+        {
+            Cache.Set(cacheKey, link, builder.ExpiresOn);
         }
     }
 
@@ -46,11 +58,30 @@ public class StorageCacheManager
         }
     }
 
+    public bool TryGetSasLink(string filename, [MaybeNullWhen(false)] out string link)
+    {
+        link = null;
+        var cacheKey = $"[SAS]({filename})";
+
+        lock (Locker)
+        {
+            return Cache.TryGetValue(cacheKey, out link);
+        }
+    }
+
     public void Remove(string filename)
     {
         lock (Locker)
         {
             Cache.Remove(filename);
+        }
+    }
+
+    public void RemoveSasLink(string filename)
+    {
+        lock (Locker)
+        {
+            Cache.Remove($"[SAS]{filename}");
         }
     }
 }

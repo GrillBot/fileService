@@ -66,6 +66,9 @@ public class StorageManager
 
     public string? GenerateLink(string filename)
     {
+        if (StorageCache.TryGetSasLink(filename, out var link))
+            return link;
+
         var blobClient = Client.GetBlobClient(filename);
         if (!blobClient.CanGenerateSasUri) return null;
 
@@ -79,7 +82,10 @@ public class StorageManager
         builder.SetPermissions(BlobSasPermissions.Read);
 
         var uri = blobClient.GenerateSasUri(builder);
-        return uri.ToString();
+        link = uri.ToString();
+        StorageCache.AddSasLink(filename, link, builder);
+
+        return link;
     }
 
     public async Task DeleteAsync(string filename)
@@ -87,6 +93,8 @@ public class StorageManager
         var blobClient = Client.GetBlobClient(filename);
 
         await blobClient.DeleteIfExistsAsync();
+
         StorageCache.Remove(filename);
+        StorageCache.RemoveSasLink(filename);
     }
 }
