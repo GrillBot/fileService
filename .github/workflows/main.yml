@@ -17,7 +17,6 @@ jobs:
 
       - name: Try build container
         shell: bash
-        working-directory: src
         run: |
           sudo docker build -t fileservice-test-image -f ./Dockerfile .
           sudo docker rmi $(docker images --format "{{.Repository}}:{{.Tag}}" | grep 'fileservice-test-image')
