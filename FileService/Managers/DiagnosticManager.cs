@@ -60,7 +60,7 @@ public class DiagnosticManager
             MeasuredFrom = process.StartTime,
             RequestsCount = Statistics.Sum(o => o.Count),
             UsedMemory = process.WorkingSet64,
-            CpuTime = Convert.ToInt64(process.TotalProcessorTime)
+            CpuTime = Convert.ToInt64(process.TotalProcessorTime.TotalMilliseconds)
         };
     }
 }
