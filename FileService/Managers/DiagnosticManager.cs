@@ -59,7 +59,8 @@ public class DiagnosticManager
             Version = GetType().Assembly.GetName().Version!.ToString(),
             MeasuredFrom = process.StartTime,
             RequestsCount = Statistics.Sum(o => o.Count),
-            UsedMemory = process.WorkingSet64
+            UsedMemory = process.WorkingSet64,
+            CpuTime = Convert.ToInt64(process.TotalProcessorTime)
         };
     }
 }
